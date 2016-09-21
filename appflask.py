@@ -33,7 +33,7 @@ if __name__ == "__main__":
         status = False
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(17, GPIO.OUT)
-        app.run(host="0.0.0.0", port=5000, debug=True)
+        app.run(host="189.5.253.103", port=5000, debug=True)
     finally:
         # print("\n\nDEU\n\n")
         GPIO.cleanup()
