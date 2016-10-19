@@ -20,13 +20,19 @@ def motionSensor():
             presenceTimeStamps.append(timestamp)
             time.sleep(2)
 
-@app.route("/presence/")
-def presence():
+@app.route("/presence/getlist")
+def presenceGetList():
     global presenceTimeStamps
     stamps = ""
     for ts in presenceTimeStamps:
         stamps = stamps + str(ts) + "\n"
     return stamps
+
+@app.route("/presence/clear")
+def presenceClearList():
+    global presenceTimeStamps
+    presenceTimeStamps = []
+    return "Timestamp list cleared."
 
 @app.route("/light/on/")
 def on():
