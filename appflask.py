@@ -25,7 +25,7 @@ def presenceGetList():
     global presenceTimeStamps
     stamps = ""
     for ts in presenceTimeStamps:
-        stamps = stamps + str(ts) + "\n"
+        stamps = stamps + str(ts) + ";"
     return stamps
 
 @app.route("/presence/clear")
