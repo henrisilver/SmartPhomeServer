@@ -1,9 +1,11 @@
-from flask import Flask
+from flask import Flask, jsonify
 from gpiozero import MotionSensor
-import RPi.GPIO as GPIO
-import time
 import datetime
+import os
+import pygame
+import RPi.GPIO as GPIO
 import threading
+import time
 
 app = Flask(__name__)
 status = False
@@ -20,13 +22,21 @@ def motionSensor():
             presenceTimeStamps.append(timestamp)
             time.sleep(2)
 
-@app.route("/presence/getlist")
-def presenceGetList():
-    global presenceTimeStamps
-    stamps = ""
-    for ts in presenceTimeStamps:
-        stamps = stamps + str(ts) + "\n"
-    return stamps
+@app.route("/music/play=<song>")
+def playSong(song):
+    songName = str(song) + ".mp3"
+    pygame.mixer.music.load(songName)
+    pygame.mixer.music.play()
+
+@app.route("/music/getsonglist")
+def songList():
+    songList = {}
+    index = 1
+    for file in os.listdir("./songs"):
+        if file.endswith(".mp3"):
+            songList[index] = file
+            index = index + 1
+    return jsonify(**songList)
 
 @app.route("/presence/clear")
 def presenceClearList():
@@ -64,6 +74,7 @@ if __name__ == "__main__":
         t.start()
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(17, GPIO.OUT)
+        pygame.mixer.init()
         app.run(host="189.5.253.103", port=5000, debug=True)
     finally:
         GPIO.cleanup()
