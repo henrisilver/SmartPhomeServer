@@ -24,9 +24,13 @@ def motionSensor():
 
 @app.route("/music/play=<song>")
 def playSong(song):
-    songName = str(song) + ".mp3"
-    pygame.mixer.music.load(songName)
-    pygame.mixer.music.play()
+    try:
+        songName = "./songs/" + str(song) + ".mp3"
+        pygame.mixer.music.load(songName)
+        pygame.mixer.music.play()
+
+    except:
+        return "An error occurred."
 
 @app.route("/music/getsonglist")
 def songList():
