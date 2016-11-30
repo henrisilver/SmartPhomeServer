@@ -33,6 +33,11 @@ def playSong(song):
         print (e)
         return "Error"
 
+@app.route("/music/stop")
+def stopPlayback(song):
+    pygame.mixer.music.stop()
+    return "Playback stopped"
+
 @app.route("/music/getsonglist")
 def songList():
     songList = {}
