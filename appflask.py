@@ -38,7 +38,7 @@ def songList():
     index = 1
     for file in os.listdir("./songs"):
         if file.endswith(".mp3"):
-            songList[str(index)] = file
+            songList[str(index)] = file[:-4]
             index = index + 1
     return jsonify(**songList)
 
