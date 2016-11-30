@@ -68,14 +68,14 @@ def presenceClearList():
 
 @app.route("/light2/on/")
 def on2():
-    GPIO.output(21, True)
+    GPIO.output(27, True)
     global status2
     status2 = True
     return "LED on"
 
 @app.route("/light2/off/")
 def off2():
-    GPIO.output(21, False)
+    GPIO.output(27, False)
     global status2
     status2 = False
     return "LED off"
@@ -119,7 +119,7 @@ if __name__ == "__main__":
         t.start()
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(17, GPIO.OUT)
-        GPIO.setup(21, GPIO.OUT)
+        GPIO.setup(27, GPIO.OUT)
         pygame.mixer.init()
         app.run(host="189.5.253.103", port=5000, debug=True)
     finally:
