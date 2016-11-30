@@ -28,7 +28,7 @@ def playSong(song):
         songName = "./songs/" + str(song) + ".mp3"
         pygame.mixer.music.load(songName)
         pygame.mixer.music.play()
-
+        return "Playing " + str(song)
     except:
         return "An error occurred."
 
