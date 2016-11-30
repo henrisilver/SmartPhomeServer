@@ -29,8 +29,9 @@ def playSong(song):
         pygame.mixer.music.load(songName)
         pygame.mixer.music.play()
         return "Playing " + str(song)
-    except:
-        return "An error occurred."
+    except Exception as e:
+        print (e)
+        return "Error"
 
 @app.route("/music/getsonglist")
 def songList():
