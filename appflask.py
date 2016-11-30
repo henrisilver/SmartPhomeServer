@@ -38,6 +38,14 @@ def songList():
             index = index + 1
     return jsonify(**songList)
 
+@app.route("/presence/getlist")
+def presenceGetList():
+    global presenceTimeStamps
+    stamps = ""
+    for ts in presenceTimeStamps:
+        stamps = stamps + str(ts) + ";"
+    return stamps
+
 @app.route("/presence/clear")
 def presenceClearList():
     global presenceTimeStamps
