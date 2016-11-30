@@ -22,7 +22,7 @@ def motionSensor():
             ts = {}
             timestamp = timestamp.split()
             ts["date"] = timestamp[0]
-            ts["time"] = [1]
+            ts["time"] = timestamp[1]
             presenceTimeStamps[str(index)] = ts
             index = index + 1
             time.sleep(2)
