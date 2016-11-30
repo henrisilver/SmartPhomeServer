@@ -9,6 +9,7 @@ import time
 
 app = Flask(__name__)
 status = False
+status2 = False
 presenceTimeStamps = {}
 
 def motionSensor():
@@ -65,6 +66,29 @@ def presenceClearList():
     presenceTimeStamps = []
     return "Timestamp list cleared."
 
+@app.route("/light2/on/")
+def on2():
+    GPIO.output(21, True)
+    global status2
+    status2 = True
+    return "LED on"
+
+@app.route("/light2/off/")
+def off2():
+    GPIO.output(21, False)
+    global status2
+    status2 = False
+    return "LED off"
+
+@app.route("/light2/status/")
+def status2():
+    global status2
+    if status2:
+        str = "on"
+    else:
+        str = "off"
+    return str
+
 @app.route("/light/on/")
 def on():
     GPIO.output(17, True)
@@ -95,6 +119,7 @@ if __name__ == "__main__":
         t.start()
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(17, GPIO.OUT)
+        GPIO.setup(21, GPIO.OUT)
         pygame.mixer.init()
         app.run(host="189.5.253.103", port=5000, debug=True)
     finally:
