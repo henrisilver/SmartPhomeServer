@@ -9,17 +9,22 @@ import time
 
 app = Flask(__name__)
 status = False
-presenceTimeStamps = []
+presenceTimeStamps = {}
 
 def motionSensor():
     sensor = MotionSensor(4)
     global presenceTimeStamps
-    global lock
+    index = 0
     while True:
         if sensor.motion_detected:
             currentTime = time.time()
             timestamp = datetime.datetime.fromtimestamp(currentTime).strftime('%Y-%m-%d %H:%M:%S') 
-            presenceTimeStamps.append(timestamp)
+            ts = {}
+            timestamp = timestamp.split()
+            ts["date"] = timestamp[0]
+            ts["time"] = [1]
+            presenceTimeStamps[str(index)] = ts
+            index = index + 1
             time.sleep(2)
 
 @app.route("/music/play=<song>")
@@ -51,10 +56,8 @@ def songList():
 @app.route("/presence/getlist")
 def presenceGetList():
     global presenceTimeStamps
-    stamps = ""
-    for ts in presenceTimeStamps:
-        stamps = stamps + str(ts) + ";"
-    return stamps
+    
+    return jsonify(**presenceTimeStamps)
 
 @app.route("/presence/clear")
 def presenceClearList():
